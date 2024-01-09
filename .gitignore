@@ -4,3 +4,5 @@ music/*.mp3
 snippets/*.mp3
 
 snippets.json
+
+venv/
