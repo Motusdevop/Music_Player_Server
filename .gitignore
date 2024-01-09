@@ -1,0 +1,6 @@
+Music_db.db
+
+music/*.mp3
+snippets/*.mp3
+
+snippets.json
