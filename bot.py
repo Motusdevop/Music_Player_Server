@@ -1,6 +1,11 @@
-from aiogram import Bot, Dispatcher, types
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiogram.dispatcher.filters.builtin import CommandStart, Command, CommandHelp
+import asyncio
+
+from aiohttp import web
+
+from aiogram import Bot, Dispatcher, types, Router
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.filters import CommandStart, Command
+from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 
 import config
 import create_mp3
@@ -11,7 +16,23 @@ import snippets
 # Создание экземпляра бота и диспетчера
 bot = Bot(config.BOT_TOKEN)
 storage = MemoryStorage()
-dp = Dispatcher(bot, storage=storage)
+dp = Dispatcher(storage=storage)
+
+# SCOPIROVANNIY COD IZ AIOGRAM_3.x DOKI
+WEB_SERVER_HOST = "194.58.109.189"
+# Port for incoming request from reverse proxy. Should be any available port
+WEB_SERVER_PORT = 8080
+
+# Path to webhook route, on which Telegram will send requests
+WEBHOOK_PATH = "/webhook"
+# Secret key to validate requests from Telegram (optional)
+WEBHOOK_SECRET = config.BOT_TOKEN
+# Base URL for webhook will be used to generate webhook URL for Telegram,
+# in this example it is used public DNS with HTTPS support
+BASE_WEBHOOK_URL = "https://aiogram.dev/"
+
+
+router = Router()
 
 path_to_db = "Music_db.db"
 path_to_snippets_json = "snippets.json"
@@ -27,13 +48,13 @@ def snippets_work(answer_db: list[tuple]) -> tuple:
     return zone
 
 
-@dp.message_handler(CommandStart())
+@router.message(CommandStart())
 async def start_command(message: types.Message) -> None:
     # Отправляем приветственное сообщение пользователю
     await message.answer("Привет!")
 
 
-# @dp.message_handler(Command('stats'))
+# @router.message(Command('stats'))
 # async def stats_command(message: types.Message) -> None:
 #     try:
 #         key = message.text.split()[1]
@@ -42,7 +63,7 @@ async def start_command(message: types.Message) -> None:
 #     await message.answer("Статистика" + key)
 
 
-@dp.message_handler(CommandHelp())
+@router.message(Command('help'))
 async def help_command(message: types.Message) -> None:
     await message.answer(
         "Помощь:\nЧтобы получить сниппет просто введите название трека\nЧтобы помсотреть статистику по трекам введите "
@@ -50,7 +71,7 @@ async def help_command(message: types.Message) -> None:
 
 
 # Создание функции-обработчика текстовых сообщений
-@dp.message_handler(content_types=types.ContentTypes.TEXT)
+@router.message()
 async def handle_text(message: types.Message):
     search_text = message.text
     # Ваш код для обработки текстового сообщения
@@ -90,8 +111,31 @@ async def handle_text(message: types.Message):
         await message.answer(answer + "\nНапишите полное название трека")
 
 
-# Запуск бота
-if __name__ == '__main__':
-    from aiogram import executor
 
-    executor.start_polling(dp)
+async def main() -> None:
+    dp.include_routers(
+        router,
+    )
+
+    await bot.delete_webhook(drop_pending_updates=True)
+
+    # app = web.Application()
+
+    # webhook_requests_handler = SimpleRequestHandler(
+        # dispatcher=dp,
+        # bot=bot,
+        # secret_token=WEBHOOK_SECRET,
+    # )
+
+    # webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+
+    # setup_application(app, dp, bot=bot)
+
+    # web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
+    await dp.start_polling(bot)
+
+asyncio.run(main())
+# Запуск бота
+# if __name__ == '__main__':
+    # asyncio.run(main())
+

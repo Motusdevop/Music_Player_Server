@@ -1,5 +1,8 @@
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv(os.path.join(os.getcwd(), '.env'))
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
 
