@@ -71,4 +71,7 @@ def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SN
 def get_snippet_list(id: int, path_to_snippets_json: str = "snippets.json") -> list[int]:
     snippet_dict = get_snippets(path_to_snippets_json=path_to_snippets_json)
 
-    return snippet_dict[str(id)]
+    try:
+        return snippet_dict[str(id)]
+    except KeyError:
+        return None

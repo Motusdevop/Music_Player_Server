@@ -12,8 +12,6 @@ app.config["UPLOAD_FOLDER"] = "loads"
 db.create_table()
 db.create_fts5()
 
-snippets.clear()
-
 snippets_dict = snippets.get_snippets()
 
 last_id = db.get_last_id()
