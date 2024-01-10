@@ -84,7 +84,7 @@ def snippet():
 
         snippets.update_json(snippets_dict)
 
-        db.update_counts_of_listen(track_id=int(track_id))
+        # db.update_counts_of_listen(track_id=int(track_id))
 
         return snippets_dict[track_id]
 

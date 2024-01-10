@@ -73,24 +73,24 @@ def add_music(title: str, artist: str, genre="NS", path_to_db: str = "Music_db.d
         print("connection closed")
 
 
-def update_counts_of_listen(path_to_db: str = "Music_db.db", track_id: int = 0) -> None:
-    try:
-        con = sqlite3.connect(path_to_db)
-        cursor = con.cursor()
-
-        cursor.execute('SELECT count_listens FROM Music WHERE id = ?', (track_id,))
-        count_listens = cursor.fetchone()[0]
-
-        count_listens += 1
-
-        cursor.execute('UPDATE Music SET count_listens = ? WHERE id = ?', (count_listens, track_id))
-        con.commit()
-
-    except sqlite3.Error as er:
-        print(f"Error: {er}")
-    finally:
-        con.close()
-        print("connection closed")
+# def update_counts_of_listen(path_to_db: str = "Music_db.db", track_id: int = 0) -> None:
+#     try:
+#         con = sqlite3.connect(path_to_db)
+#         cursor = con.cursor()
+#
+#         cursor.execute('SELECT count_listens FROM Music WHERE id = ?', (track_id,))
+#         count_listens = cursor.fetchone()[0]
+#
+#         count_listens += 1
+#
+#         cursor.execute('UPDATE Music SET count_listens = ? WHERE id = ?', (count_listens, track_id))
+#         con.commit()
+#
+#     except sqlite3.Error as er:
+#         print(f"Error: {er}")
+#     finally:
+#         con.close()
+#         print("connection closed")
 
 
 def get_last_id(path_to_db: str = "Music_db.db"):
