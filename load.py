@@ -4,6 +4,7 @@ import os
 
 
 def load_track(path: str):
+    global id
     try:
         mutagenfile = EasyID3(path)
         print(f"loading: {mutagenfile['title'][0]}")
@@ -16,6 +17,7 @@ def load_track(path: str):
         id = result[0]
 
         db.add_fts5(id, title + " - " + artist)
+
     except:
         pass
 

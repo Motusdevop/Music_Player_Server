@@ -17,6 +17,7 @@ snippets.clear()
 snippets_dict = snippets.get_snippets()
 
 last_id = db.get_last_id()
+
 if last_id is None:
     pass
 else:

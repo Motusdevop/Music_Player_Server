@@ -99,7 +99,10 @@ def get_last_id(path_to_db: str = "Music_db.db"):
         con = sqlite3.connect(path_to_db)
         cursor = con.cursor()
         cursor.execute('SELECT id FROM Music ORDER BY id DESC LIMIT 1')
-        return cursor.fetchone()
+        result = cursor.fetchone()
+        if result is None:
+            return (1,)
+        return result
     except sqlite3.Error as er:
         print(f"Error: {er}")
     finally:
