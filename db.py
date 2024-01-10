@@ -11,8 +11,7 @@ def create_table(path_to_db: str = "Music_db.db"):
         id INTEGER PRIMARY KEY,
         title TEXT NOT NULL,
         artist TEXT NOT NULL,
-        genre TEXT,
-        count_listens INT
+        genre TEXT
         )
         ''')
 
@@ -63,7 +62,7 @@ def add_music(title: str, artist: str, genre="NS", path_to_db: str = "Music_db.d
         con = sqlite3.connect(path_to_db)
         cursor = con.cursor()
 
-        cursor.execute('INSERT INTO Music (title, artist, genre) VALUES (?, ?, ?, ?)', (title, artist, genre, 0))
+        cursor.execute('INSERT INTO Music (title, artist, genre) VALUES (?, ?, ?)', (title, artist, genre))
         con.commit()
         cursor.execute('SELECT id FROM Music ORDER BY id DESC LIMIT 1')
         return cursor.fetchone()
