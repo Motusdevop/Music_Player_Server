@@ -43,8 +43,8 @@ path_to_snippets_dict = "snippets/"
 def snippets_work(answer_db: list[tuple]) -> tuple:
     track_id = answer_db[0][0]
     snippet_list = snippets.get_snippet_list(track_id, path_to_snippets_json=path_to_snippets_json)
-    zone = snippets.create_seconds_zone(snippet_list, MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET=1,
-                                        MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET=1)
+    zone = snippets.create_seconds_zone(snippet_list, MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET=MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET,
+                                        MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET=MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET)
     return zone
 
 
@@ -93,6 +93,7 @@ async def handle_text(message: types.Message):
         track_id = answer_db[0][0]
 
         if zone:
+
             create_mp3.create(path_to_music + str(track_id) + ".mp3", zone[0], zone[1], path_to_snippets_dict)
 
             with open(path_to_snippets_dict + f"snippet_{track_id}.mp3", "rb") as f:
