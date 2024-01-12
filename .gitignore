@@ -9,3 +9,10 @@ venv/
 .env
 
 env/
+
+
+
+.DS_Store
+
+.idea/
+__pychache__/
