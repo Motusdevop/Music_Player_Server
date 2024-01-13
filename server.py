@@ -90,21 +90,24 @@ def search_track():
 
 @app.route('/admin', methods=['POST', 'GET'])
 def admin_panel():
-    if session['ADMIN']:
-        global tracks
-        if request.method == "GET":
-            return render_template("admin.html")
+    try:
+        if session['ADMIN']:
+            global tracks
+            if request.method == "GET":
+                return render_template("admin.html")
+            else:
+                try:
+                    f = request.files['file']
+                    f.save("loads.mp3")
+                    a = "done"
+                    load.load_track("loads.mp3")
+                    tracks = list(range(1, db.get_last_id()[0] + 1))
+                except:
+                    a = 'error'
+                return render_template("admin.html", a=a)
         else:
-            try:
-                f = request.files['file']
-                f.save("loads.mp3")
-                a = "done"
-                load.load_track("loads.mp3")
-                tracks = list(range(1, db.get_last_id()[0] + 1))
-            except:
-                a = 'error'
-            return render_template("admin.html", a=a)
-    else:
+            return redirect('/auth')
+    except KeyError:
         return redirect('/auth')
 
 
