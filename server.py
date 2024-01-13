@@ -162,7 +162,7 @@ def get_snippet_file():
 
                 create_mp3.create(path_to_music + track_id + ".mp3", zone[0], zone[1], path_to_snippets_dict)
 
-                return send_file(f"music/{track_id}.mp3", as_attachment=True)
+                return send_file(f"snippets/snippet_{track_id}.mp3", as_attachment=True)
             
             else:
                 return '<link rel="stylesheet" href="../css/style.css"><h2>Сниппет не готов</h2>'
