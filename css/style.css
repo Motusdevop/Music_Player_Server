@@ -1,0 +1,41 @@
+.text {
+    text-align: center;
+    margin: 2%;
+    margin-top: 5%;
+}
+
+._form {
+    margin: 2%;
+    color: black;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+}
+
+body {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+}
+
+.hello {
+    text-align: center;
+}
+
+.links {
+    margin-top: 4%;
+    font-size: medium;
+}
+
+.auth {
+    margin-top: 5%;
+    text-align: center;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+}
+
+.enter {
+    margin-top: 10%;
+    text-align: center;
+}

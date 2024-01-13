@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher, types, Router
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.filters import CommandStart, Command
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+from aiogram.utils.markdown import hlink
 
 import config
 import create_mp3
@@ -36,8 +37,9 @@ router = Router()
 
 path_to_db = "Music_db.db"
 path_to_snippets_json = "snippets.json"
-path_to_music = "music/"
 path_to_snippets_dict = "snippets/"
+
+DOMAIN = config.DOMAIN
 
 
 def snippets_work(answer_db: list[tuple]) -> tuple:
@@ -95,11 +97,12 @@ async def handle_text(message: types.Message):
         track_id = answer_db[0][0]
 
         if zone:
+            
+            url_mp3 = hlink('Скачать трек', f'{DOMAIN}/track?track_id={track_id}')
+            url_snippet = hlink('Сниппет', f'{DOMAIN}/get_snippet?track_id={track_id}')
 
-            create_mp3.create(path_to_music + str(track_id) + ".mp3", zone[0], zone[1], path_to_snippets_dict)
 
-            with open(path_to_snippets_dict + f"snippet_{track_id}.mp3", "rb") as f:
-                await message.answer_audio(f)
+            await message.answer(f'{title}: {url_mp3} {url_snippet}', parse_mode="HTML")
 
         else:
             await message.answer("Сниппет не готов")
@@ -109,9 +112,15 @@ async def handle_text(message: types.Message):
     else:
         count = 1
         for track in answer_db:
-            answer += f"{count}. {track[1]}\n"
+
+            track_id = track[0]
+
+            url_mp3 = hlink('Скачать трек', f'{DOMAIN}/track?track_id={track_id}')
+            url_snippet = hlink('Сниппет', f'{DOMAIN}/get_snippet?track_id={track_id}')
+
+            answer += f"{count}. {track[1]}: {url_mp3} {url_snippet}\n"
             count += 1
-        await message.answer(answer + "\nНапишите полное название трека")
+        await message.answer(answer, parse_mode="HTML")
 
 
 

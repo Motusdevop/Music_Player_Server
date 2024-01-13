@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Авторизация</title>
+</head>
+<body>
+    <div class="auth">
+        <form method="post" action="/auth">
+            <h3>Введите пароль администратора🤗</h3>
+            <p><input type="password" name="password">
+            <p><input type="submit" value="Войти"></p>
+        </form>
+    </div>
+    <div style="color: red; text-align: center;">
+        <h3>{{ alert }}</h3>
+    </div>
+</body>
+</html>
