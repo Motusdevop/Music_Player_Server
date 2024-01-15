@@ -98,11 +98,11 @@ async def handle_text(message: types.Message):
 
         if zone:
             
-            url_mp3 = hlink('Скачать трек', f'{DOMAIN}/track?track_id={track_id}')
+            url_mp3 = hlink('Трек', f'{DOMAIN}/track?track_id={track_id}')
             url_snippet = hlink('Сниппет', f'{DOMAIN}/get_snippet?track_id={track_id}')
 
 
-            await message.answer(f'{title}: {url_mp3} {url_snippet}', parse_mode="HTML")
+            await message.answer(f'{title}: {url_mp3} | {url_snippet}', parse_mode="HTML")
 
         else:
             await message.answer("Сниппет не готов")
@@ -115,10 +115,10 @@ async def handle_text(message: types.Message):
 
             track_id = track[0]
 
-            url_mp3 = hlink('Скачать трек', f'{DOMAIN}/track?track_id={track_id}')
+            url_mp3 = hlink('Трек', f'{DOMAIN}/track?track_id={track_id}')
             url_snippet = hlink('Сниппет', f'{DOMAIN}/get_snippet?track_id={track_id}')
 
-            answer += f"{count}. {track[1]}: {url_mp3} {url_snippet}\n"
+            answer += f"{count}. {track[1]}: {url_mp3} | {url_snippet}\n"
             count += 1
         await message.answer(answer, parse_mode="HTML")
 

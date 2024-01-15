@@ -66,7 +66,7 @@ def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SN
     Len: int = zones[index][-1] - zones[index][1]
 
     if Len > 60:
-        zones[index][-1] -= (Len - 60)
+        zones[index][-1] -= abs((59 - Len))
 
     # print(index)
 
