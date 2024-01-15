@@ -59,22 +59,27 @@ def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SN
     index = 0
 
     for i in zones:  # Ищем самую большую зону. Это и есть наш сниппет
-        if len(i) > maximum_len:
-            maximum_len = len(i)
-            index = zones.index(i)
+        try:
+            if not (zones[zones.index(i)][0] in list(range(10)) and zones[zones.index(i)] != []):
+                priority = 0
 
-    print(zones[index][-1])
-    print(zones[index][1])
+                if 50 < zones[zones.index(i)][0] < 200:
+                    priority += 1
+
+                if len(zones[index]) < len(i):
+                    priority += 1
+
+                if priority > last_priority:
+                    index = zones.index(i)
+                    last_priority = priority
+
+        except IndexError:
+            continue
 
     Len: int = zones[index][-1] - zones[index][1]
 
-    print(Len)
-
     if Len > 60 or Len < 30:
         zones[index][-1] = zones[index][0] + 60
-
-    print(zones[index][-1])
-    print(zones[index][1])
 
     # print(index)
 
