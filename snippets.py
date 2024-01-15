@@ -56,6 +56,7 @@ def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SN
             count_zones += 1
 
     maximum_len = 0
+    last_priority = 0
     index = 0
 
     for i in zones:  # Ищем самую большую зону. Это и есть наш сниппет
