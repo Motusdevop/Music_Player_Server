@@ -15,4 +15,4 @@ def create(path_to_track: str, start: int, end: int, path_to_snippets: str):
 
 
 if __name__ == '__main__':
-    create("music/1.mp3", 15, 30, "../snippets/")
+    create("music/1.mp3", 15, 30, "snippets/")

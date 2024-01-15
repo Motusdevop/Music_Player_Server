@@ -160,6 +160,9 @@ def get_snippet_file():
 
             if zone:
 
+                print('zone 0:', zone[0])
+                print('zone 1:', zone[1])
+
                 create_mp3.create(path_to_music + track_id + ".mp3", zone[0], zone[1], path_to_snippets_dict)
 
                 return send_file(f"snippets/snippet_{track_id}.mp3", as_attachment=True)
