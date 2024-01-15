@@ -55,7 +55,7 @@ def snippets_work(answer_db: list[tuple]) -> tuple:
 @router.message(CommandStart())
 async def start_command(message: types.Message) -> None:
     # Отправляем приветственное сообщение пользователю
-    await message.answer("Привет!")
+    await message.answer("Здравствуйте введите название трека, чтобы получить ссылки на файлы. Помощь: /help")
 
 
 # @router.message(Command('stats'))
@@ -70,8 +70,7 @@ async def start_command(message: types.Message) -> None:
 @router.message(Command('help'))
 async def help_command(message: types.Message) -> None:
     await message.answer(
-        "Помощь:\nЧтобы получить сниппет просто введите название трека\nЧтобы помсотреть статистику по трекам введите "
-        "команду: /stats")
+        "Помощь:\nЧтобы получить сниппет просто введите название трека")
 
 
 # Создание функции-обработчика текстовых сообщений
