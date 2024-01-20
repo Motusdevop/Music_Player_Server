@@ -1,8 +1,6 @@
 import json
 from statistics import median
 
-from config import MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET, MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET
-
 
 def get_snippets(path_to_snippets_json: str = "snippets.json") -> dict:
     try:
@@ -25,7 +23,7 @@ def clear() -> None:
         print("{}")
 
 
-def create_seconds_zone(snippet_list: list[int]) -> tuple:  # Получаем зону сниппета
+def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET, MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET) -> tuple:  # Получаем зону сниппета
     if max(snippet_list) < MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET or median(
             snippet_list) < MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET:  # Условия создания сниппета
         return tuple()

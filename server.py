@@ -38,7 +38,9 @@ def snippets_work(track_id: int) -> tuple:
     if snippet_list is None:
         return tuple()
 
-    zone = snippets.create_seconds_zone(snippet_list, MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET=MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET,MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET=MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET)
+    zone = snippets.create_seconds_zone(snippet_list,
+                                        MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET=MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET,
+                                        MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET=MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET)
     
     return zone
 
