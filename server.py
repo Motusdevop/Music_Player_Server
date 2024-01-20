@@ -1,3 +1,4 @@
+import sys
 from flask import Flask, request, send_file, render_template, redirect, session
 import json
 import os
@@ -35,15 +36,12 @@ path_to_snippets_dict = 'snippets/'
 
 def snippets_work(track_id: int) -> tuple:
     snippet_list = snippets.get_snippet_list(track_id, path_to_snippets_json=path_to_snippets_json)
-    print(snippet_list)
     if snippet_list is None:
         return tuple()
 
     zone = snippets.create_seconds_zone(snippet_list,
                                         MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET=MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET,
                                         MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET=MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET)
-    
-    print(zone)
     
     return zone
 
@@ -165,9 +163,6 @@ def get_snippet_file():
 
             if zone:
 
-                print('zone 0:', zone[0])
-                print('zone 1:', zone[1])
-
                 create_mp3.create(path_to_music + track_id + ".mp3", zone[0], zone[1], path_to_snippets_dict)
 
                 return send_file(f"snippets/snippet_{track_id}.mp3", as_attachment=True)
@@ -179,6 +174,12 @@ def get_snippet_file():
             return '<link rel="stylesheet" href="../css/style.css"><h2>Такого трека нет</h2>'
     except ValueError:
         return '<link rel="stylesheet" href="../css/style.css"><h2>Такого трека нет</h2>'
+    
+    except Exception:
+        with open("error_log.txt", 'w') as file:
+            e = sys.exc_info()[1]
+            file.write(f"Ошибка: {e}")
+            
 
 
 
