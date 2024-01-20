@@ -178,7 +178,7 @@ def get_snippet_file():
     except Exception:
         with open("error_log.txt", 'w') as file:
             e = sys.exc_info()[1]
-            file.write(f"Ошибка: {e}")
+            file.write(f"Ошибка: {e}\nZone: {zone}")
             
 
 
