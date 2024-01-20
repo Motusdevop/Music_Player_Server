@@ -35,12 +35,15 @@ path_to_snippets_dict = 'snippets/'
 
 def snippets_work(track_id: int) -> tuple:
     snippet_list = snippets.get_snippet_list(track_id, path_to_snippets_json=path_to_snippets_json)
+    print(snippet_list)
     if snippet_list is None:
         return tuple()
 
     zone = snippets.create_seconds_zone(snippet_list,
                                         MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET=MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET,
                                         MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET=MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET)
+    
+    print(zone)
     
     return zone
 
@@ -168,13 +171,13 @@ def get_snippet_file():
                 create_mp3.create(path_to_music + track_id + ".mp3", zone[0], zone[1], path_to_snippets_dict)
 
                 return send_file(f"snippets/snippet_{track_id}.mp3", as_attachment=True)
-            
+
             else:
                 return '<link rel="stylesheet" href="../css/style.css"><h2>Сниппет не готов</h2>'
-        
+
         else:
             return '<link rel="stylesheet" href="../css/style.css"><h2>Такого трека нет</h2>'
-    except:
+    except ValueError:
         return '<link rel="stylesheet" href="../css/style.css"><h2>Такого трека нет</h2>'
 
 

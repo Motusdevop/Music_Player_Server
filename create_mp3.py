@@ -1,7 +1,6 @@
 from pydub import AudioSegment
 import os
 
-
 def create(path_to_track: str, start: int, end: int, path_to_snippets: str):
     audio_file = AudioSegment.from_file(path_to_track)
     start_time = start * 1000  # начало обрезки в миллисекундах
@@ -9,7 +8,6 @@ def create(path_to_track: str, start: int, end: int, path_to_snippets: str):
 
     filename = path_to_track.split("/")[-1]
 
-    print(id)
 
     trimmed_audio = audio_file[start_time:end_time]
 
