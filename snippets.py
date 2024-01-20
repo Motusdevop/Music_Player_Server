@@ -1,6 +1,8 @@
 import json
 from statistics import median
 
+from config import MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET, MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET
+
 
 def get_snippets(path_to_snippets_json: str = "snippets.json") -> dict:
     try:
@@ -23,8 +25,7 @@ def clear() -> None:
         print("{}")
 
 
-def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET: int = 10,
-                        MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET: int = 1) -> tuple:  # Получаем зону сниппета
+def create_seconds_zone(snippet_list: list[int]) -> tuple:  # Получаем зону сниппета
     if max(snippet_list) < MIN_COUNT_OF_PLAYS_TO_CREATE_SNIPPET or median(
             snippet_list) < MIN_MEDIAN_OF_PLAYS_TO_CREATE_SNIPPET:  # Условия создания сниппета
         return tuple()
@@ -55,9 +56,11 @@ def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SN
         else:
             count_zones += 1
 
-    maximum_len = 0
-    last_priority = 0
     index = 0
+
+    last_priority = 0
+
+    dictory = dict()
 
     for i in zones:  # Ищем самую большую зону. Это и есть наш сниппет
         try:
@@ -77,12 +80,13 @@ def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SN
         except IndexError:
             continue
 
-    Len: int = zones[index][-1] - zones[index][1]
+    try:
+        Len: int = zones[index][-1] - zones[index][1]
+    except IndexError:
+        return tuple()
 
     if Len > 60 or Len < 30:
         zones[index][-1] = zones[index][0] + 60
-
-    # print(index)
 
     return zones[index][0], zones[index][-1]
 
