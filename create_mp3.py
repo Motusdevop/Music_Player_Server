@@ -1,5 +1,4 @@
 from pydub import AudioSegment
-import os
 
 def create(path_to_track: str, start: int, end: int, path_to_snippets: str):
     audio_file = AudioSegment.from_file(path_to_track)
@@ -10,8 +9,6 @@ def create(path_to_track: str, start: int, end: int, path_to_snippets: str):
 
 
     trimmed_audio = audio_file[start_time:end_time]
-
-    os.remove(path_to_snippets + "snippet_" + filename)
 
     trimmed_audio.export(path_to_snippets + "snippet_" + filename, format="mp3")
 
