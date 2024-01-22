@@ -77,6 +77,14 @@ def create_seconds_zone(snippet_list: list[int], MIN_COUNT_OF_PLAYS_TO_CREATE_SN
 
         except IndexError:
             continue
+    
+    if zones[index][0] in range(10):
+        try:
+            zones[index+1][2]
+
+            index += 1
+        except:
+            return tuple()
 
     try:
         Len: int = zones[index][-1] - zones[index][1]
