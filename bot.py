@@ -94,17 +94,17 @@ async def handle_text(message: types.Message):
         zone = snippets_work(answer_db)
 
         track_id = answer_db[0][0]
+        url_mp3 = hlink('Трек', f'{DOMAIN}/track?track_id={track_id}')
 
         if zone:
-            
-            url_mp3 = hlink('Трек', f'{DOMAIN}/track?track_id={track_id}')
+
             url_snippet = hlink('Сниппет', f'{DOMAIN}/get_snippet?track_id={track_id}')
 
 
             await message.answer(f'{title}: {url_mp3} | {url_snippet}', parse_mode="HTML")
 
         else:
-            await message.answer("Сниппет не готов")
+            await message.answer(f"Сниппет не готов: {url_mp3}")
     elif len(answer_db) > 10:
         answer = "Найдено больше 10 треков. Дополните запрос"
         await message.answer(answer)
