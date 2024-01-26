@@ -104,7 +104,7 @@ async def handle_text(message: types.Message):
             await message.answer(f'{title}: {url_mp3} | {url_snippet}', parse_mode="HTML")
 
         else:
-            await message.answer(f"Сниппет не готов: {url_mp3}")
+            await message.answer(f"Сниппет не готов: {url_mp3}", parse_mode="HTML")
     elif len(answer_db) > 10:
         answer = "Найдено больше 10 треков. Дополните запрос"
         await message.answer(answer)
